@@ -1,0 +1,34 @@
+{
+    "name": "lambda-s3-mv",
+    "version": "1.0.0",
+    "description": "This nodejs module will move files to another S3 location.",
+    "main": "index.js",
+    "author": "francismeynard",
+    "license": "MIT",
+    "scripts": {
+        "test": "./node_modules/.bin/mocha --recursive --reporter spec"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/francismeynard/lambda-s3-mv.git"
+    },
+    "homepage": "https://github.com/francismeynard/lambda-s3-mv#readme",
+    "keywords": [
+        "aws",
+        "lambda",
+        "function",
+        "s3",
+        "bucket",
+        "move",
+        "copy",
+        "mv",
+        "cp",
+        "files"
+    ],
+    "dependencies": {},
+    "devDependencies": {
+        "chai": "^3.5.0",
+        "mocha": "^2.5.3",
+        "sinon": "^6.3.1"
+    }
+}

@@ -1,6 +1,6 @@
 {
     "name": "lambda-s3-mv",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "This nodejs module will move files to another S3 location.",
     "main": "index.js",
     "author": "francismeynard",

@@ -1,7 +1,7 @@
 'use strict';
 
 const sinon = require('sinon');
-const { assert, expect } = require('chai');
+const { assert } = require('chai');
 
 const s3mv = require('../index.js');
 

@@ -70,6 +70,7 @@ const result = await s3mv.move({
     targetPath: 's3-target-prefix-path'
 });
 console.log(result);
+```
 
 3. Move **specified list of files** in the specified S3 sourcePath into the same S3 bucket.
 

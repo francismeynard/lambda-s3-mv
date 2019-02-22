@@ -13,12 +13,16 @@ const s3 = new aws.S3();
         sourceFiles: ['source-file1.txt', 'source-file2.txt'],
         targetBucket: 's3-target-bucket-name',
         targetPath: 's3-target-prefix-path',
+        targetFiles: ['source-file1-moved.txt', 'source-file2-moved.txt'],
         createCopy: false
     }
  * @return {object} - a JSON object containing the details of the files that has been moved or copied.
     {
         s3Bucket: 's3-target-bucket-name',
-        s3Objects: ['/s3-target-prefix-path/source-file1.txt', '/s3-target-prefix-path/source-file2.txt']
+        s3Objects: [
+            '/s3-target-prefix-path/source-file1.txt', 
+            '/s3-target-prefix-path/source-file2.txt'
+        ]
     }
  */
 module.exports.move = (options) => new Promise(async (resolve, reject) => {
@@ -28,6 +32,7 @@ module.exports.move = (options) => new Promise(async (resolve, reject) => {
 
         const targetBucket = options.targetBucket || options.sourceBucket; // if targetBucket is empty, use sourceBucket!
         const targetPath = checkRequiredParameter(options, "targetPath");
+        const targetFiles = options.targetFiles || [];
 
         const createCopy = options.createCopy || false;
 
@@ -44,11 +49,14 @@ module.exports.move = (options) => new Promise(async (resolve, reject) => {
 
         const movedFilesLocation = [];
 
-        for (let sourceFile of sourceFiles) {
+        for (let index = 0; index < sourceFiles.length; index++) {
             try {
-                let targetFilePath = `${targetPath}/${sourceFile.substring(sourceFile.lastIndexOf("/") + 1)}`;
-                await s3.copyObject({ CopySource: `${sourceBucket}/${sourceFile}`, Bucket: targetBucket, Key: targetFilePath }).promise();
-                movedFilesLocation.push(targetFilePath);
+                let sourceFile = sourceFiles[index];
+                let targetFile = `${targetPath}/${targetFiles[index] || sourceFile.substring(sourceFile.lastIndexOf("/") + 1)}`;
+
+                await s3.copyObject({ CopySource: `${sourceBucket}/${sourceFile}`, Bucket: targetBucket, Key: targetFile }).promise();
+
+                movedFilesLocation.push(targetFile);
             } catch (error) {
                 console.log(`Error moving ${sourceFile}: ${error}`);
             }
